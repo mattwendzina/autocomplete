@@ -25,15 +25,19 @@ export const Autocomplete = (props: AutocompleteProps) => {
 
     const entries = Object.entries(courseData);
     const results = entries
-      .filter(([key], index) => {
+      .filter(([key]) => {
+        const joinedKey = key.split("-").join("");
+        return joinedKey.includes(searchValue.toLowerCase().replace(/\s/g, ""));
+      })
+      .map((result) => {
+        return result[1];
+      })
+      .filter((_result, index) => {
         if (resultsLimit > 0 && resultsLimit <= index) {
           return false;
         }
-        const joinedKey = key.split("-").join("");
-
-        return joinedKey.includes(searchValue.toLowerCase().replace(/\s/g, ""));
-      })
-      .map((result) => result[1]);
+        return true;
+      });
 
     setResults(results);
   };
