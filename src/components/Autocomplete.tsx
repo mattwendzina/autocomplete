@@ -34,8 +34,10 @@ export const Autocomplete = () => {
         </label>
       </div>
       <ul className={styles["c-autocomplete__results-container"]}>
-        {results?.map((result) => (
-          <li className={styles["c-autocomplete__result"]}>{result}</li>
+        {results?.map((result, index) => (
+          <li key={index} className={styles["c-autocomplete__result"]}>
+            {result}
+          </li>
         ))}
       </ul>
     </div>
