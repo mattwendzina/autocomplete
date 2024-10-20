@@ -2,11 +2,21 @@ import { useState } from "react";
 import courseData from "../courses.json";
 import styles from "./autocomplete.module.css";
 
-export const Autocomplete = () => {
-  const [results, setResults] = useState<string[]>([""]);
+interface AutocompleteProps {
+  minQueryLength?: number;
+  resultsLimit?: number;
+}
+
+export const Autocomplete = (props: AutocompleteProps) => {
+  const { minQueryLength = 0, resultsLimit = 0 } = props;
+  const [results, setResults] = useState<string[]>([]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value;
+
+    if (minQueryLength > searchValue.length) {
+      return;
+    }
 
     if (!searchValue) {
       setResults([""]);
@@ -15,7 +25,10 @@ export const Autocomplete = () => {
 
     const entries = Object.entries(courseData);
     const results = entries
-      .filter(([key]) => {
+      .filter(([key], index) => {
+        if (resultsLimit > 0 && resultsLimit <= index) {
+          return false;
+        }
         const joinedKey = key.split("-").join("");
 
         return joinedKey.includes(searchValue.toLowerCase().replace(/\s/g, ""));

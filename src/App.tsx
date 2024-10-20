@@ -6,7 +6,7 @@ function App() {
     <>
       <h1>Autocomplete</h1>
       <p className="read-the-docs">Building an autocomplete</p>
-      <Autocomplete />
+      <Autocomplete minQueryLength={2} resultsLimit={2} />
     </>
   );
 }
