@@ -1,5 +1,5 @@
 import { useState } from "react";
-import searchData from "../data.json";
+import courseData from "../courses.json";
 import styles from "./autocomplete.module.css";
 
 export const Autocomplete = () => {
@@ -13,7 +13,7 @@ export const Autocomplete = () => {
       return;
     }
 
-    const entries = Object.entries(searchData);
+    const entries = Object.entries(courseData);
     const results = entries
       .filter(([key]) => {
         const joinedKey = key.split("-").join("");
